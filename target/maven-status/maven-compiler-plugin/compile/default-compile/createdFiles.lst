@@ -1,3 +1,15 @@
-com\jobshield\matching\TestController.class
+com\jobshield\auth\dto\AuthResponse.class
+com\jobshield\security\JwtAuthenticationFilter.class
+com\jobshield\auth\dto\LoginRequest.class
+com\jobshield\user\entity\Role.class
+com\jobshield\user\repository\UserRepo.class
+com\jobshield\user\entity\Users$UsersBuilder.class
 com\jobshield\security\SecurityConfig.class
+com\jobshield\user\entity\Users.class
+com\jobshield\matching\TestController.class
+com\jobshield\auth\dto\RegisterRequest.class
+com\jobshield\auth\controller\AuthController.class
+com\jobshield\auth\service\AuthService.class
 com\jobshield\JobshieldApplication.class
+com\jobshield\candidate\CandidateProfiles.class
+com\jobshield\security\JwtService.class
