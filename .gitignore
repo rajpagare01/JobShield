@@ -1,0 +1,9 @@
+# Spring Boot
+src/main/resources/application.properties
+
+# Maven
+target/
+
+# IntelliJ
+.idea/
+.env

@@ -2,6 +2,7 @@ package com.jobshield.auth.controller;
 
 
 import com.jobshield.auth.dto.AuthResponse;
+import com.jobshield.auth.dto.LoginRequest;
 import com.jobshield.auth.dto.RegisterRequest;
 import com.jobshield.auth.service.AuthService;
 import jakarta.validation.Valid;
@@ -28,5 +29,9 @@ public class AuthController {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(authService.register(request));
+    }
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponse> login(@Valid @RequestBody LoginRequest request) {
+        return ResponseEntity.ok(authService.login(request));
     }
 }

@@ -7,4 +7,5 @@ import lombok.Data;
 @AllArgsConstructor
 public class AuthResponse {
     private String massage;
+    private String token;
 }

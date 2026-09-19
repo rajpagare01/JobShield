@@ -1,25 +1,24 @@
 package com.jobshield.auth.service;
 
 import com.jobshield.auth.dto.AuthResponse;
+import com.jobshield.auth.dto.LoginRequest;
 import com.jobshield.auth.dto.RegisterRequest;
+import com.jobshield.security.JwtService;
 import com.jobshield.user.entity.Role;
 import com.jobshield.user.entity.Users;
 import com.jobshield.user.repository.UserRepo;
-import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.Setter;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Service
 @RequiredArgsConstructor
 public class AuthService {
-    private final UserRepo userRepo;
 
+    private final UserRepo userRepo;
     private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepo.existsByEmail(request.getEmail())) {
@@ -35,6 +34,33 @@ public class AuthService {
 
         userRepo.save(user);
 
-        return new AuthResponse("User registered successfully");
+        String token = jwtService.generateToken(user.getEmail());
+
+        return new AuthResponse(
+                "User registered successfully",
+                token
+        );
+    }
+
+    public AuthResponse login(LoginRequest request) {
+
+        Users user = userRepo.findByEmail(request.getEmail())
+                .orElseThrow(() ->
+                        new RuntimeException("Invalid email or password")
+                );
+
+        if (!passwordEncoder.matches(
+                request.getPassword(),
+                user.getPassword()
+        )) {
+            throw new RuntimeException("Invalid email or password");
+        }
+
+        String token = jwtService.generateToken(user.getEmail());
+
+        return new AuthResponse(
+                "User logged successfully",
+                token
+        );
     }
 }
