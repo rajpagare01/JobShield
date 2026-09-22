@@ -3,6 +3,8 @@ package com.jobshield.auth.service;
 import com.jobshield.auth.dto.AuthResponse;
 import com.jobshield.auth.dto.LoginRequest;
 import com.jobshield.auth.dto.RegisterRequest;
+import com.jobshield.exception.EmailAlreadyExistsException;
+import com.jobshield.exception.InvalidCredentialsException;
 import com.jobshield.security.JwtService;
 import com.jobshield.user.entity.Role;
 import com.jobshield.user.entity.Users;
@@ -22,9 +24,10 @@ public class AuthService {
     public AuthResponse register(RegisterRequest request) {
 
         if (userRepo.existsByEmail(request.getEmail())) {
-            throw new RuntimeException("Email already registered");
+            throw new EmailAlreadyExistsException(
+                    "Email already registered"
+            );
         }
-
         Users user = Users.builder()
                 .name(request.getName())
                 .email(request.getEmail())
@@ -46,14 +49,14 @@ public class AuthService {
 
         Users user = userRepo.findByEmail(request.getEmail())
                 .orElseThrow(() ->
-                        new RuntimeException("Invalid email or password")
+                        new InvalidCredentialsException("Invalid email or password")
                 );
 
         if (!passwordEncoder.matches(
                 request.getPassword(),
                 user.getPassword()
         )) {
-            throw new RuntimeException("Invalid email or password");
+            throw new InvalidCredentialsException("Invalid email or password");
         }
 
         String token = jwtService.generateToken(user.getEmail());
