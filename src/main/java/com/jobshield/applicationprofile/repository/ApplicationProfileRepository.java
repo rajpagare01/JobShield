@@ -1,6 +1,7 @@
-package com.jobshield.application.repository;
+package com.jobshield.applicationprofile.repository;
 
-import com.jobshield.application.entity.ApplicationProfile;
+
+import com.jobshield.applicationprofile.entity.ApplicationProfile;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
@@ -10,5 +11,5 @@ public interface ApplicationProfileRepository extends JpaRepository<ApplicationP
 
     List<ApplicationProfile> findByCandidateProfileId(Long candidateProfileId);
 
-    Optional<ApplicationProfile> findByIdAndCandidateProfileId(Long id ,  Long candidateProfileId);
+    Optional<ApplicationProfile> findByIdAndCandidateProfileId(Long id , Long candidateProfileId);
 }

@@ -1,4 +1,4 @@
-package com.jobshield.application.dto;
+package com.jobshield.applicationprofile.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

@@ -1,4 +1,4 @@
-package com.jobshield.application.entity;
+package com.jobshield.applicationprofile.entity;
 
 import com.jobshield.candidate.entity.CandidateProfile;
 import jakarta.persistence.*;
