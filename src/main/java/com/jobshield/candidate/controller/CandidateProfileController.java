@@ -47,4 +47,29 @@ public class CandidateProfileController {
         CandidateProfileResponse profile =  candidateProfileService.getCandidateProfile(users.getId());
         return ResponseEntity.ok(profile);
     }
+    @PutMapping("/profile")
+    ResponseEntity<CandidateProfileResponse> updateProfile(@Valid @RequestBody CandidateProfileRequest request , Authentication authentication)
+    {
+        String email = authentication.getName();
+        Users users = userRepo.findByEmail(email).orElseThrow(() -> new RuntimeException("user not found"));
+        CandidateProfileResponse profileResponse = candidateProfileService.updateCandidateProfile(users.getId(), request);
+        return ResponseEntity.ok(profileResponse);
+
+    }
+
+    @DeleteMapping("/profile")
+    public ResponseEntity<Void> deleteProfile(
+            Authentication authentication) {
+
+        String email = authentication.getName();
+
+        Users user = userRepo.findByEmail(email)
+                .orElseThrow(() ->
+                        new RuntimeException("User not found"));
+
+        candidateProfileService.deleteCandidateProfile(user.getId());
+
+        return ResponseEntity.noContent().build();
+    }
+
 }

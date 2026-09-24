@@ -47,4 +47,37 @@ public class CandidateProfileService {
                 profile.getExperience()
         );
     }
+
+    public CandidateProfileResponse updateCandidateProfile(Long userId, CandidateProfileRequest candidateProfileRequest){
+        CandidateProfile candidateProfile = candidateProfileRepository.findByUserId(userId)
+                .orElseThrow(()->new RuntimeException("candidate not found"));
+        candidateProfile.setLocation(candidateProfileRequest.getLocation());
+        candidateProfile.setAbout(candidateProfileRequest.getAbout());
+        candidateProfileRequest.setEducation(candidateProfileRequest.getEducation());
+        candidateProfileRequest.setExperience(candidateProfileRequest.getExperience());
+        CandidateProfile updatedProfile =
+                candidateProfileRepository.save(candidateProfile);
+
+        Users user = candidateProfile.getUser();
+
+        return new CandidateProfileResponse(
+                updatedProfile.getId(),
+                user.getName(),
+                user.getEmail(),
+                updatedProfile.getLocation(),
+                updatedProfile.getAbout(),
+                updatedProfile.getEducation(),
+                updatedProfile.getExperience()
+        );
+    }
+    public void deleteCandidateProfile(Long userId) {
+
+        CandidateProfile profile =
+                candidateProfileRepository.findByUserId(userId)
+                        .orElseThrow(() ->
+                                new RuntimeException("Candidate profile not found")
+                        );
+
+        candidateProfileRepository.delete(profile);
+    }
 }
