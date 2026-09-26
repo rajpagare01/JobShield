@@ -1,5 +1,6 @@
 package com.jobshield.candidate.entity;
 
+import com.jobshield.common.BaseEntity;
 import com.jobshield.user.entity.Users;
 import jakarta.persistence.*;
 import lombok.*;
@@ -11,7 +12,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class CandidateProfile {
+public class CandidateProfile extends BaseEntity{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
